@@ -1,0 +1,54 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Registraion Form</h1>
+    <form (ngSubmit)="onSubmit()" #registrationForm="ngForm">
+      <div class="form-group">
+        <label for="name">First Name</label>
+        <input type="text" class="form-control" id="name"
+               required
+               [(ngModel)]="model.firstName" name="name"
+               #name="ngModel">
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+         First Name is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName"
+               [(ngModel)]="model.lastName" name="lastName">
+      </div>
+      <div class="form-group">
+        <label for="email">User email</label>
+        <select class="form-control" id="email"
+                required
+                [(ngModel)]="model.email" name="email"
+                #email="ngModel">
+          <option *ngFor="let pow of emails" [value]="pow">{{pow}}</option>
+        </select>
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+          email is required
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!registrationForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newUser(); registrationForm.reset()">New User</button>
+    </form>
+  </div>
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">First Name</div>
+      <div class="col-xs-9  pull-left">{{ model.firstName }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Last Name</div>
+      <div class="col-xs-9 pull-left">{{ model.lastName }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Email</div>
+      <div class="col-xs-9 pull-left">{{ model.email }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
+</div>
